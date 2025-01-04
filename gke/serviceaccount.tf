@@ -1,7 +1,7 @@
 # GKEノード用のサービスアカウント
 resource "google_service_account" "gke_sa" {
-  account_id   = "gke-node-sa"
-  display_name = "GKE Node Service Account"
+  account_id   = "${local.prefix}-sa"
+  display_name = "${local.prefix} Service Account"
   description  = "Service account for GKE nodes"
 }
 

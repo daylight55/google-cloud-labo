@@ -1,12 +1,12 @@
-resource "google_compute_network" "gke" {
-  name                    = "gke-demo-vpc"
+resource "google_compute_network" "default" {
+  name                    = "${local.prefix}-vpc"
   auto_create_subnetworks = false
 }
 
 resource "google_compute_subnetwork" "private_subnet" {
-  name          = "gke-demo-private-subnet"
+  name          = "${local.prefix}-subnet"
   ip_cidr_range = "10.0.0.0/24" # NodeのIPアドレス範囲
-  network       = google_compute_network.gke.id
+  network       = google_compute_network.default.id
   region        = local.region
 
   secondary_ip_range {
@@ -20,14 +20,14 @@ resource "google_compute_subnetwork" "private_subnet" {
 }
 
 resource "google_compute_router" "private_subnet" {
-  name    = "private-subnet-router"
+  name    = "${local.prefix}-router"
   region  = local.region
-  network = google_compute_network.gke.id
+  network = google_compute_network.default.id
 }
 
 # Cloud NAT
 resource "google_compute_router_nat" "nat" {
-  name                               = "gke-nat"
+  name                               = "${local.prefix}-nat"
   router                             = google_compute_router.private_subnet.name
   region                             = local.region
   nat_ip_allocate_option             = "AUTO_ONLY"

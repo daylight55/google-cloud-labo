@@ -44,6 +44,7 @@ locals {
   region         = "${local.inputs.region}"
   zone           = "${local.inputs.zone}"
   tfstate_bucket = "${local.inputs.tfstate_bucket}"
+  prefix         = "${local.inputs.prefix}"
 }
 EOF
 }
