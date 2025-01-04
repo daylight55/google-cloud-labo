@@ -4,6 +4,6 @@ resource "google_project_service" "services" {
     "containerregistry.googleapis.com",
   ])
 
-  project = var.project_id
+  project = local.project
   service = each.key
 }

@@ -1,6 +1,6 @@
 resource "google_container_cluster" "primary" {
   name     = "minimal-cluster"
-  location = var.zone
+  location = local.zone
 
   initial_node_count       = 1
   remove_default_node_pool = true
@@ -26,7 +26,7 @@ resource "google_container_cluster" "primary" {
 # Spot VMを使用したノードプール
 resource "google_container_node_pool" "spot_nodes" {
   name       = "spot-node-pool"
-  location   = var.zone
+  location   = local.zone
   cluster    = google_container_cluster.primary.name
   node_count = 1
 

@@ -7,7 +7,7 @@ resource "google_compute_subnetwork" "private_subnet" {
   name          = "gke-demo-private-subnet"
   ip_cidr_range = "10.0.0.0/24" # NodeのIPアドレス範囲
   network       = google_compute_network.gke.id
-  region        = var.region
+  region        = local.region
 
   secondary_ip_range {
     range_name    = "pod-ranges"
@@ -21,7 +21,7 @@ resource "google_compute_subnetwork" "private_subnet" {
 
 resource "google_compute_router" "private_subnet" {
   name    = "private-subnet-router"
-  region  = var.region
+  region  = local.region
   network = google_compute_network.gke.id
 }
 
@@ -29,7 +29,7 @@ resource "google_compute_router" "private_subnet" {
 resource "google_compute_router_nat" "nat" {
   name                               = "gke-nat"
   router                             = google_compute_router.private_subnet.name
-  region                             = var.region
+  region                             = local.region
   nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
 

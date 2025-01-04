@@ -15,7 +15,7 @@ resource "google_project_iam_member" "gke_sa_roles" {
     "roles/stackdriver.resourceMetadata.writer" # リソースメタデータの書き込み
   ])
 
-  project = var.project_id
+  project = local.project
   role    = each.value
   member  = "serviceAccount:${google_service_account.gke_sa.email}"
 }
