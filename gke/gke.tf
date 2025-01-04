@@ -8,6 +8,10 @@ resource "google_container_cluster" "primary" {
   network    = google_compute_network.default.name
   subnetwork = google_compute_subnetwork.private_subnet.name
 
+  workload_identity_config {
+    workload_pool = "${local.project}.svc.id.goog"
+  }
+
   ip_allocation_policy {
     cluster_secondary_range_name  = "pod-ranges"
     services_secondary_range_name = "service-ranges"
@@ -43,6 +47,10 @@ resource "google_container_node_pool" "spot_nodes" {
 
     # カスタムサービスアカウントを使用
     service_account = google_service_account.gke_sa.email
+
+    workload_metadata_config {
+      mode = "GKE_METADATA"
+    }
   }
 
   management {
