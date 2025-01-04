@@ -1,1 +1,2 @@
-project_id = "daylight-labo"
+project        = "xxx"
+tfstate_bucket = "xxx"
