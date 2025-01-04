@@ -17,6 +17,22 @@ resource "google_container_cluster" "primary" {
     services_secondary_range_name = "service-ranges"
   }
 
+  # Private Cluster の設定
+  private_cluster_config {
+    enable_private_nodes    = true
+    enable_private_endpoint = false  # Cloud Shellからのアクセスを許可
+    master_ipv4_cidr_block = "172.16.0.0/28"
+
+    master_global_access_config {
+      enabled = true  # マスターへのグローバルアクセスを有効化
+    }
+  }
+
+  # Private Service Connect の設定
+  master_authorized_networks_config {
+    gcp_public_cidrs_access_enabled = false
+  }
+
   logging_service    = "none"
   monitoring_service = "none"
 
@@ -47,6 +63,11 @@ resource "google_container_node_pool" "spot_nodes" {
 
     # カスタムサービスアカウントを使用
     service_account = google_service_account.gke_sa.email
+
+    # ファイアウォールルール用のタグを追加
+    tags = [
+      "${local.prefix}-gke"
+    ]
 
     workload_metadata_config {
       mode = "GKE_METADATA"
