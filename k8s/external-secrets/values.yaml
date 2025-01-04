@@ -1,0 +1,41 @@
+replicaCount: 1
+
+serviceAccount:
+  create: true
+  name: 'external-secrets'
+  annotations:
+    iam.gke.io/gcp-service-account: 'external-secrets@${PROJECT_ID}.iam.gserviceaccount.com'
+
+webhook:
+  replicaCount: 1
+  serviceAccount:
+    create: true
+    name: 'external-secrets-webhook'
+
+certController:
+  serviceAccount:
+    create: true
+    name: 'external-secrets-cert-controller'
+
+# リソース制限
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+# Podの配置設定
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - external-secrets
+          topologyKey: kubernetes.io/hostname
