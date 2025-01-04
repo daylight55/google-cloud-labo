@@ -1,5 +1,5 @@
 resource "google_storage_bucket" "terraform-state-store" {
-  name          = "daylight55-terraform-state"
+  name          = var.tfstate_bucket
   location      = "us-west1" # 無料枠にするため
   storage_class = "REGIONAL"
 
