@@ -19,6 +19,25 @@ resource "google_compute_subnetwork" "private_subnet" {
   }
 }
 
+# Private Service Connect用のサブネット
+resource "google_compute_subnetwork" "psc_subnet" {
+  name          = "${local.prefix}-psc-subnet"
+  ip_cidr_range = "10.3.0.0/24"
+  network       = google_compute_network.default.id
+  region        = local.region
+  purpose       = "PRIVATE_SERVICE_CONNECT"
+}
+
+# Private Service Connect用のエンドポイント
+resource "google_compute_global_address" "psc_endpoint" {
+  name          = "${local.prefix}-psc-endpoint"
+  address_type  = "INTERNAL"
+  purpose       = "PRIVATE_SERVICE_CONNECT"
+  network       = google_compute_network.default.id
+  address       = "10.3.0.2"
+  prefix_length = 24
+}
+
 resource "google_compute_router" "private_subnet" {
   name    = "${local.prefix}-router"
   region  = local.region
