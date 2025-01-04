@@ -1,0 +1,6 @@
+[tools]
+terraform = "1.10.3"
+terragrunt = "0.71.1"
+helmfile = "0.169.2"
+kubectl = "1.32.0"
+helm = "3.16.4"
