@@ -7,7 +7,7 @@ generate "provider" {
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 provider "google" {
-  project = "${local.project_id}"
+  project = "${local.inputs.project}"
   region  = "us-west1"
 }
 
@@ -25,7 +25,7 @@ EOF
 remote_state {
   backend = "gcs"
   config = {
-    bucket = "daylight55-terraform-state"
+    bucket = "${local.inputs.tfstate_bucket}"
     prefix = "${path_relative_to_include()}/terraform.tfstate"
   }
 
@@ -46,3 +46,4 @@ locals {
   tfstate_bucket = "${local.inputs.tfstate_bucket}"
 }
 EOF
+}

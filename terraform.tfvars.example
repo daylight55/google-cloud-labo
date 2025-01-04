@@ -1,4 +1,4 @@
-project_id     = "xxx"
+project        = "xxx"
 region         = "us-west1"
 zone           = "us-west1-a"
 tfstate_bucket = "xxx"
