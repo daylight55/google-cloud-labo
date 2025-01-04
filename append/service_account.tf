@@ -3,7 +3,7 @@ locals {
   # External Secrets
   k8s_external_secret_namespace = "external-secrets"
   k8s_external_secret_sa_name   = "external-secrets"
-  k8s_external_secret_sa_fqn    = "${local.workload_identity_pool}/[${local.k8s_external_secret_namespace}/${local.k8s_external_secret_sa_name}]"
+  k8s_external_secret_sa_fqn    = "serviceAccount:${local.workload_identity_pool}[${local.k8s_external_secret_namespace}/${local.k8s_external_secret_sa_name}]"
 }
 
 #
