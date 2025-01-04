@@ -1,4 +1,4 @@
-resource "google_container_cluster" "primary" {
+resource "google_container_cluster" "default" {
   name     = "${local.prefix}-cluster"
   location = local.zone
 
@@ -17,6 +17,11 @@ resource "google_container_cluster" "primary" {
     services_secondary_range_name = "service-ranges"
   }
 
+  network_policy {
+    enabled  = true
+    provider = "CALICO"
+  }
+
   logging_service    = "none"
   monitoring_service = "none"
 
@@ -28,14 +33,14 @@ resource "google_container_cluster" "primary" {
 }
 
 # Spot VMを使用したノードプール
-resource "google_container_node_pool" "spot_nodes" {
+resource "google_container_node_pool" "default" {
   name       = "${local.prefix}-node-pool"
   location   = local.zone
-  cluster    = google_container_cluster.primary.name
+  cluster    = google_container_cluster.default.name
   node_count = 1
 
   autoscaling {
-    min_node_count = 1
+    min_node_count = 2
     max_node_count = 10
   }
 
