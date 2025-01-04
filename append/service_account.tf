@@ -1,5 +1,5 @@
 locals {
-  workload_identity_pool = data.terraform_remote_state.gke.outputs.cluster_workload_identity_pool
+  workload_identity_pool = var.cluster_workload_identity_pool
   # External Secrets
   k8s_external_secret_namespace = "external-secrets"
   k8s_external_secret_sa_name   = "external-secrets"

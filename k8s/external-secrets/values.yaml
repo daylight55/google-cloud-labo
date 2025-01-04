@@ -4,7 +4,7 @@ serviceAccount:
   create: true
   name: 'external-secrets'
   annotations:
-    iam.gke.io/gcp-service-account: 'external-secrets@${PROJECT_ID}.iam.gserviceaccount.com'
+    iam.gke.io/gcp-service-account: 'external-secrets@daylight-labo.iam.gserviceaccount.com'
 
 webhook:
   replicaCount: 1
