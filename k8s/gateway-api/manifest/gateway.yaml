@@ -3,6 +3,8 @@ kind: Gateway
 metadata:
   name: external-http
   namespace: gateway-api
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "*.labo.daylight55.com"
 spec:
   gatewayClassName: gke-l7-global-external-managed
   listeners:
