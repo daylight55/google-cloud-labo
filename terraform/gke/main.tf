@@ -38,7 +38,7 @@ resource "google_container_node_pool" "default" {
   name       = "${var.tfvars.prefix}-node-pool"
   location   = var.tfvars.zone
   cluster    = google_container_cluster.default.name
-  node_count = 1
+  node_count = 2
 
   autoscaling {
     min_node_count = 2

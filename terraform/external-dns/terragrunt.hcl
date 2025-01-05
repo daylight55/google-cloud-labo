@@ -29,3 +29,11 @@ dependencies {
     "../gke"
   ]
 }
+
+dependency "cloud-dns" {
+  config_path = find_in_parent_folders("cloud-dns/terragrunt.hcl")
+}
+
+inputs = {
+  name_servers = dependency.cloud-dns.outputs.name_servers
+}
