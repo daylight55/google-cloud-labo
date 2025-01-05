@@ -1,6 +1,6 @@
-# google-cloud-terraform
+# google-cloud-labo
 
-Google Cloud Platform上にKubernetesクラスタ(GKE)を構築し、以下のコンポーネントを導入するためのTerraformコードです。
+Google Cloud Platform 上に Kubernetes クラスタ(GKE)を構築し、以下のコンポーネントを導入するための Terraform コードです。
 
 - External DNS
 - External Secrets
@@ -13,26 +13,26 @@ graph TB
     subgraph "Google Cloud Platform"
         subgraph "VPC Network"
             GKE["GKE Cluster"]
-            
+
             subgraph "Kubernetes Resources"
                 ExtDNS["External DNS"]
                 ExtSecrets["External Secrets"]
                 Gateway["Gateway API"]
             end
         end
-        
+
         DNS["Cloud DNS"]
         SecretManager["Secret Manager"]
     end
-    
+
     subgraph "External Services"
         Cloudflare["Cloudflare DNS"]
     end
-    
+
     GKE --> ExtDNS
     GKE --> ExtSecrets
     GKE --> Gateway
-    
+
     ExtDNS --> DNS
     ExtDNS --> Cloudflare
     ExtSecrets --> SecretManager
@@ -42,20 +42,22 @@ graph TB
 
 - Terraform >= 1.0
 - Terragrunt
-- Google Cloud SDKのインストールと認証設定
-- `gcloud` CLIツール
-- `kubectl` CLIツール
-- `helmfile` CLIツール
+- Google Cloud SDK のインストールと認証設定
+- `gcloud` CLI ツール
+- `kubectl` CLI ツール
+- `helmfile` CLI ツール
 
 ## セットアップ手順
 
 1. 環境変数の設定
+
 ```bash
 # terraform.tfvars.exampleをコピーして必要な値を設定
 cp terraform.tfvars.example terraform.tfvars
 ```
 
-2. Terraformの初期化と実行
+2. Terraform の初期化と実行
+
 ```bash
 # tfstateバケットの作成
 cd terraform/_tfstate
@@ -91,7 +93,8 @@ terragrunt init
 terragrunt apply
 ```
 
-3. Kubernetesリソースのデプロイ
+3. Kubernetes リソースのデプロイ
+
 ```bash
 # GKEクラスタの認証情報を取得
 gcloud container clusters get-credentials [CLUSTER_NAME] --region [REGION] --project [PROJECT_ID]
