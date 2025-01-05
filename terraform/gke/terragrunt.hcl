@@ -4,6 +4,11 @@ include "root" {
 
 dependency "vpc" {
   config_path = "../vpc"
+
+  mock_outputs = {
+    network_name    = "mock-network-name"
+    subnetwork_name = "mock-subnetwork-name"
+  }
 }
 
 inputs = {

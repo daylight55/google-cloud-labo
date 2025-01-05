@@ -32,6 +32,9 @@ dependencies {
 
 dependency "cloud-dns" {
   config_path = find_in_parent_folders("cloud-dns/terragrunt.hcl")
+  mock_outputs = {
+    name_servers = ["ns-cloud-dns1.googledomains.com", "ns-cloud-dns2.googledomains.com", "ns-cloud-dns3.googledomains.com", "ns-cloud-dns4.googledomains.com"]
+  }
 }
 
 inputs = {

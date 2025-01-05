@@ -11,6 +11,9 @@ dependencies {
 
 dependency "cloud-dns" {
   config_path = find_in_parent_folders("cloud-dns/terragrunt.hcl")
+  mock_outputs = {
+    managed_zone = "zone-name"
+  }
 }
 
 inputs = {
