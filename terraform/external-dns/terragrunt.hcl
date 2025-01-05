@@ -35,5 +35,6 @@ dependency "cloud-dns" {
 }
 
 inputs = {
-  name_servers = dependency.cloud-dns.outputs.name_servers
+  name_servers     = dependency.cloud-dns.outputs.name_servers
+  dnssec_ds_record = dependency.cloud-dns.outputs.dnssec_ds_record
 }
