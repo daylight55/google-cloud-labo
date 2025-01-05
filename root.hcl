@@ -1,5 +1,5 @@
 locals {
-  inputs = jsondecode(read_tfvars_file("${get_path_to_repo_root()}/terraform.tfvars"))
+  inputs = yamldecode(file("${find_in_parent_folders("env.yaml")}"))
 }
 
 inputs = {
