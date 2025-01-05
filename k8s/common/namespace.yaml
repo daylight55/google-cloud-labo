@@ -24,3 +24,12 @@ metadata:
     name: external-dns
   annotations:
     description: 'Namespace for External DNS Operator'
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gateway-api
+  labels:
+    name: gateway-api
+  annotations:
+    description: 'Namespace for Gateway API resources'

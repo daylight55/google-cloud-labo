@@ -1,0 +1,4 @@
+releases:
+  - name: gateway-api
+    chart: ./manifest
+    namespace: gateway-api
