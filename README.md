@@ -60,6 +60,36 @@ graph TB
 ```bash
 # terraform.tfvars.exampleをコピーして必要な値を設定
 cp terraform.tfvars.example terraform.tfvars
+
+# env.yaml.exampleをコピーして必要な値を設定
+cp env.yaml.example env.yaml
+```
+
+env.yamlで設定が必要な値：
+
+| 設定項目 | 説明 | 例 |
+|----------|------|-----|
+| project | GCPプロジェクトID | my-project-id |
+| region | GCPリージョン | us-west1 |
+| zone | GCPゾーン | us-west1-c |
+| prefix | リソース名のプレフィックス（任意） | dev |
+| tfstate_bucket | Terraformの状態を保存するGCSバケット名 | my-tfstate-bucket |
+| domain | 使用するドメイン | example.com |
+| subdomain | 使用するサブドメイン | dev |
+| cloudflare_api_token | CloudflareのAPIトークン | xxxxx |
+| repository_name | ArgoCDで使用するリポジトリ名 | my-repo |
+
+設定例：
+```yaml
+project: 'my-project-id'
+region: 'us-west1'
+zone: 'us-west1-c'
+prefix: 'dev'
+tfstate_bucket: 'my-tfstate-bucket'
+domain: 'example.com'
+subdomain: 'dev'
+cloudflare_api_token: 'xxxxx'
+repository_name: 'my-repo'
 ```
 
 2. Terraform の初期化と実行
