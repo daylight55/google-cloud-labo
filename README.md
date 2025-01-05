@@ -5,6 +5,7 @@ Google Cloud Platform 上に Kubernetes クラスタ(GKE)を構築し、以下�
 - External DNS
 - External Secrets
 - Gateway API
+- Certificate Manager
 
 ## インフラ構成図
 
@@ -18,6 +19,7 @@ graph TB
                 ExtDNS["External DNS"]
                 ExtSecrets["External Secrets"]
                 Gateway["Gateway API"]
+                CertManager["Certificate Manager"]
             end
         end
 
@@ -32,6 +34,7 @@ graph TB
     GKE --> ExtDNS
     GKE --> ExtSecrets
     GKE --> Gateway
+    GKE --> CertManager
 
     ExtDNS --> DNS
     ExtDNS --> Cloudflare
@@ -40,6 +43,7 @@ graph TB
 
 ## 前提条件
 
+- mise
 - Terraform >= 1.0
 - Terragrunt
 - Google Cloud SDK のインストールと認証設定
@@ -91,6 +95,10 @@ terragrunt apply
 cd ../external-secrets
 terragrunt init
 terragrunt apply
+
+cd ../certificate-manager
+terragrunt init
+terragrunt apply
 ```
 
 3. Kubernetes リソースのデプロイ
@@ -122,6 +130,7 @@ helmfile sync
 │   └── sample/           # サンプルアプリケーション
 └── terraform/             # Terraformコード
     ├── _tfstate/         # tfstate用GCSバケット設定
+    ├── certificate-manager/ # Certificate Manager設定
     ├── cloud-dns/        # Cloud DNS設定
     ├── common/           # 共通のGCPリソース設定
     ├── external-dns/     # External DNS用IAM設定
