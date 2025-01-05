@@ -1,3 +1,7 @@
+inputs = {
+  tfvars = jsondecode(read_tfvars_file("${get_path_to_repo_root()}/terraform.tfvars"))
+}
+
 locals {
   inputs = jsondecode(read_tfvars_file("${get_path_to_repo_root()}/terraform.tfvars"))
 }
