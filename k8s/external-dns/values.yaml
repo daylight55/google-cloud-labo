@@ -2,18 +2,18 @@
 provider: google
 google:
   project: daylight-labo
-  serviceAccountSecret: external-dns-sa
 
 domainFilters:
   - labo.daylight55.com
 txtOwnerId: daylight-labo-cluster
 registry: txt
 policy: sync
-source:
+
+sources:
   - gateway-httproute
-  - gateway-tlsroute
 
 interval: '1m'
+logLevel: debug
 
 serviceAccount:
   create: true
