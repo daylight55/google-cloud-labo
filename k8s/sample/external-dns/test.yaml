@@ -13,10 +13,10 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx:1.25
-        ports:
-        - containerPort: 80
+        - name: nginx
+          image: nginx:1.25
+          ports:
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -25,9 +25,9 @@ metadata:
   namespace: sample
 spec:
   ports:
-  - port: 80
-    targetPort: 80
-    protocol: TCP
+    - port: 80
+      targetPort: 80
+      protocol: TCP
   selector:
     app: nginx
 ---
@@ -38,15 +38,15 @@ metadata:
   namespace: sample
 spec:
   parentRefs:
-  - name: external-gateway
-    namespace: gateway-system
+    - name: external-http
+      namespace: gateway-api
   hostnames:
-  - "nginx.example.com"
+    - 'nginx.labo.daylight55.com'
   rules:
-  - matches:
-    - path:
-        type: PathPrefix
-        value: /
-    backendRefs:
-    - name: nginx
-      port: 80
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: nginx
+          port: 80
