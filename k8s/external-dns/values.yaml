@@ -1,19 +1,24 @@
 provider: google
 google:
-  project: ${GOOGLE_PROJECT}
+  project: daylight-labo
   serviceAccountSecret: external-dns-sa
 
-domainFilters: []
-txtOwnerId: "k8s"
+domainFilters:
+  - labo.daylight55.com
+txtOwnerId: daylight-labo-cluster
+registry: txt
 policy: sync
+source:
+  - gateway-httproute
+  - gateway-tlsroute
 
-podAnnotations:
-  iam.gke.io/gcp-service-account: external-dns@${GOOGLE_PROJECT}.iam.gserviceaccount.com
+interval: '1m'
 
 serviceAccount:
   create: true
+  name: external-dns
   annotations:
-    iam.gke.io/gcp-service-account: external-dns@${GOOGLE_PROJECT}.iam.gserviceaccount.com
+    iam.gke.io/gcp-service-account: external-dns@daylight-labo.iam.gserviceaccount.com
 
 rbac:
   create: true

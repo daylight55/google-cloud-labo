@@ -15,3 +15,12 @@ metadata:
     name: external-secrets
   annotations:
     description: 'Namespace for External Secrets Operator'
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: external-dns
+  labels:
+    name: external-dns
+  annotations:
+    description: 'Namespace for External DNS Operator'
