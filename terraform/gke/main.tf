@@ -47,15 +47,15 @@ resource "google_container_node_pool" "default" {
   node_count = 2
 
   autoscaling {
-    min_node_count = 2
-    max_node_count = 10
+    min_node_count = 1
+    max_node_count = 5
   }
 
   node_config {
     machine_type = "e2-medium" # コスト効率の良いマシンタイプ
 
-    # NOTE: Spot VMの設定は一旦オフにする
-    spot = false
+    # Spot VMを使用してコストを大幅に削減（通常の70-80%削減）
+    spot = true
 
     # カスタムサービスアカウントを使用
     service_account = google_service_account.gke_sa.email
