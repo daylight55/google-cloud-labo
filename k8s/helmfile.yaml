@@ -1,0 +1,16 @@
+helmfiles:
+  - path: ./gateway-api/helmfile.yaml
+    selectors:
+      - name=gateway-api
+  - path: ./external-dns/helmfile.yaml
+    selectors:
+      - name=external-dns
+  - path: ./external-secrets/helmfile.yaml
+    selectors:
+      - name=external-secrets
+
+environments:
+  default:
+    values:
+      - environment: default
+      - project: default

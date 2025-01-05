@@ -15,6 +15,7 @@ resource "google_certificate_manager_dns_authorization" "wildcard" {
   description = "DNS Authorization for wildcard certificate"
   domain      = "${var.tfvars.subdomain}.${var.tfvars.domain}"
 }
+
 # DNS検証用のレコードを作成する
 resource "google_dns_record_set" "wildcard" {
   name         = google_certificate_manager_dns_authorization.wildcard.dns_resource_record[0].name
