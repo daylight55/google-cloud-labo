@@ -38,7 +38,7 @@ metadata:
   namespace: sample
 spec:
   parentRefs:
-    - name: external-http
+    - name: external-https
       namespace: gateway-api
   hostnames:
     - 'nginx.labo.daylight55.com'
