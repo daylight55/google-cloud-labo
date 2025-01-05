@@ -5,8 +5,8 @@ resource "google_container_cluster" "default" {
   initial_node_count       = 1
   remove_default_node_pool = true
 
-  network    = google_compute_network.default.name
-  subnetwork = google_compute_subnetwork.private_subnet.name
+  network    = var.network_name
+  subnetwork = var.subnetwork_name
 
   workload_identity_config {
     workload_pool = "${var.tfvars.project}.svc.id.goog"
@@ -32,16 +32,13 @@ resource "google_container_cluster" "default" {
   gateway_api_config {
     channel = "CHANNEL_STANDARD"
   }
-
-  depends_on = [google_project_service.services]
 }
 
-# Spot VMを使用したノードプール
 resource "google_container_node_pool" "default" {
   name       = "${var.tfvars.prefix}-node-pool"
   location   = var.tfvars.zone
   cluster    = google_container_cluster.default.name
-  node_count = 1
+  node_count = 2
 
   autoscaling {
     min_node_count = 2
@@ -51,7 +48,7 @@ resource "google_container_node_pool" "default" {
   node_config {
     machine_type = "e2-medium" # コスト効率の良いマシンタイプ
 
-    # Spot VMの設定
+    # NOTE: Spot VMの設定は一旦オフにする
     spot = false
 
     # カスタムサービスアカウントを使用
@@ -66,6 +63,4 @@ resource "google_container_node_pool" "default" {
     auto_repair  = true
     auto_upgrade = true
   }
-
-  depends_on = [google_project_service.services]
 }

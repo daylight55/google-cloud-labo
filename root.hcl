@@ -43,3 +43,15 @@ remote_state {
     if_exists = "overwrite_terragrunt"
   }
 }
+
+generate "variables" {
+  path      = "_variables.tf"
+  if_exists = "overwrite_terragrunt"
+  contents  = <<EOF
+variable "tfvars" {
+  type    = map(string)
+  default = {}
+  description = "Root terraform.tfvars file"
+}
+EOF
+}

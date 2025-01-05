@@ -1,6 +1,8 @@
 resource "google_project_service" "services" {
   provider = google-beta
   for_each = toset([
+    "container.googleapis.com",
+    "containerregistry.googleapis.com",
     "iam.googleapis.com",
     "iamcredentials.googleapis.com",
     "secretmanager.googleapis.com",
