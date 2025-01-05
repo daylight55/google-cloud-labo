@@ -1,0 +1,22 @@
+provider: google
+google:
+  project: ${GOOGLE_PROJECT}
+  serviceAccountSecret: external-dns-sa
+
+domainFilters: []
+txtOwnerId: "k8s"
+policy: sync
+
+podAnnotations:
+  iam.gke.io/gcp-service-account: external-dns@${GOOGLE_PROJECT}.iam.gserviceaccount.com
+
+serviceAccount:
+  create: true
+  annotations:
+    iam.gke.io/gcp-service-account: external-dns@${GOOGLE_PROJECT}.iam.gserviceaccount.com
+
+rbac:
+  create: true
+
+extraArgs:
+  - --google-zone-visibility=public
