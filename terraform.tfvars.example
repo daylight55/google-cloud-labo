@@ -3,6 +3,9 @@ region               = "us-west1"
 zone                 = "us-west1-c"
 prefix               = "xxx"
 tfstate_bucket       = "xxx"
-cloudflare_api_token = "xxx"
 domain               = "xxx"
 env                  = "xxx"
+# Cloudflare subdomain delegation
+cloudflare_api_token = "xxx"
+# ArgoCD
+repository_name      = "xxx"

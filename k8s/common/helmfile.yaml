@@ -1,0 +1,3 @@
+releases:
+  - name: common
+    chart: ./manifest

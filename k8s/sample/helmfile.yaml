@@ -1,0 +1,5 @@
+releases:
+  - name: sample-external-dns
+    chart: ./external-dns
+  - name: sample-external-secrets
+    chart: ./external-secrets

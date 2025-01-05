@@ -12,7 +12,9 @@ tasks:
   apply:
     cmds:
       - terragrunt run-all apply
+      - helmfile --file ./k8s/helmfile.yaml | kubectl apply -f -
 
   destroy:
     cmds:
       - terragrunt run-all destroy
+      - helmfile --file ./k8s/helmfile.yaml | kubectl delete -f -

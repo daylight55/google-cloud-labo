@@ -1,16 +1,30 @@
 helmfiles:
-  - path: ./gateway-api/helmfile.yaml
+  - path: ./common/helmfile.yaml
     selectors:
-      - name=gateway-api
+      - name=common
+
   - path: ./external-dns/helmfile.yaml
     selectors:
       - name=external-dns
+
   - path: ./external-secrets/helmfile.yaml
     selectors:
+      - name=external-secrets
+
+  - path: ./gateway-api/helmfile.yaml
+    selectors:
+      - name=gateway-api
+
+  - path: ./sample/helmfile.yaml
+    selectors:
+      - name=external-dns
       - name=external-secrets
 
 environments:
   default:
     values:
-      - environment: default
-      - project: default
+      - project-id: daylight-labo
+      - clusterName: daylight-labo-cluster
+      - clusterLocation: us-west1-c
+      - domain: labo.daylight55.com
+      - certificate-map: daylight-labo-certificate-map

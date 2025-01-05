@@ -1,6 +1,6 @@
 # google-cloud-labo
 
-メモ: [GKEを構築して色々セットアップする- Zenn](https://zenn.dev/daylight55/scraps/0432c59da98a06)
+メモ: [GKE を構築して色々セットアップする- Zenn](https://zenn.dev/daylight55/scraps/0432c59da98a06)
 
 Google Cloud Platform 上に Kubernetes クラスタ(GKE)を構築し、以下のコンポーネントを導入するための Terraform コードです。
 
@@ -144,3 +144,11 @@ helmfile sync
 ## ライセンス
 
 MIT
+
+## メモ
+
+依存関係の Graph 図生成
+
+```
+terragrunt graph-dependencies | dot -Tsvg -Nshape=rect -Gsplines=ortho -o graph.svg
+```

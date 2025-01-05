@@ -33,6 +33,9 @@ resource "google_container_cluster" "default" {
     channel = "CHANNEL_STANDARD"
   }
 
+  # NOTE: 検証のため削除保護は無効にしています
+  deletion_protection = false
+
   lifecycle {
     ignore_changes = [
       initial_node_count,
