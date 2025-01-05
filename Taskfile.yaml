@@ -9,12 +9,40 @@ tasks:
     cmds:
       - terragrunt run-all plan
 
-  apply:
+  get-gke-credentials:
+    internal: true
+    cmds:
+      - |
+        cd terraform/gke && \
+        CLUSTER_NAME=$(terragrunt output -raw cluster_name) && \
+        LOCATION=$(terragrunt output -raw cluster_location) && \
+        gcloud container clusters get-credentials $CLUSTER_NAME --region $LOCATION
+
+  k8s-apply:
+    cmds:
+      - helmfile --file ./k8s/helmfile.yaml template | kubectl apply -f -
+
+  k8s-delete:
+    cmds:
+      - helmfile --file ./k8s/helmfile.yaml template | kubectl delete -f -
+
+  tf-apply:
     cmds:
       - terragrunt run-all apply
-      - helmfile --file ./k8s/helmfile.yaml | kubectl apply -f -
+
+  tf-destroy:
+    cmds:
+      - terragrunt run-all destroy
+
+  apply:
+    cmds:
+      - task: tf-apply
+      - task: get-gke-credentials
+      - task: k8s-apply
+    status:
+      - kubectl cluster-info &>/dev/null
 
   destroy:
     cmds:
-      - terragrunt run-all destroy
-      - helmfile --file ./k8s/helmfile.yaml | kubectl delete -f -
+      - task: k8s-delete
+      - task: tf-destroy
