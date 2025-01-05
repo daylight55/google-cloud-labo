@@ -1,7 +1,7 @@
 resource "google_certificate_manager_certificate" "wildcard" {
   name        = "${var.tfvars.prefix}-wildcard-cert"
   description = "Wildcard certificate for *.${var.tfvars.subdomain}.${var.tfvars.domain}"
-  scope       = "EDGE_CACHE"
+  scope       = "DEFAULT"
   managed {
     domains = ["*.${var.tfvars.subdomain}.${var.tfvars.domain}"]
     dns_authorizations = [
@@ -13,7 +13,7 @@ resource "google_certificate_manager_certificate" "wildcard" {
 resource "google_certificate_manager_dns_authorization" "wildcard" {
   name        = "${var.tfvars.prefix}-wildcard-dns-auth"
   description = "DNS Authorization for wildcard certificate"
-  domain      = "*.${var.tfvars.subdomain}.${var.tfvars.domain}"
+  domain      = "${var.tfvars.subdomain}.${var.tfvars.domain}"
 }
 
 resource "google_certificate_manager_certificate_map" "basic" {
@@ -27,4 +27,6 @@ resource "google_certificate_manager_certificate_map_entry" "wildcard" {
   map          = google_certificate_manager_certificate_map.basic.name
   certificates = [google_certificate_manager_certificate.wildcard.id]
   hostname     = "*.${var.tfvars.subdomain}.${var.tfvars.domain}"
+
+  depends_on = [google_certificate_manager_dns_authorization.wildcard]
 }
