@@ -3,6 +3,14 @@ provider: google
 google:
   project: daylight-labo
 
+resources:
+  limits:
+    cpu: 100m
+    memory: 100Mi
+  requests:
+    cpu: 50m
+    memory: 50Mi
+
 domainFilters:
   - labo.daylight55.com
 txtOwnerId: daylight-labo-cluster
