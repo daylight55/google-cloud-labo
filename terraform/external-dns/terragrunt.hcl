@@ -2,10 +2,6 @@ include "root" {
   path = find_in_parent_folders("root.hcl")
 }
 
-dependency "gke" {
-  config_path = find_in_parent_folders("gke/terragrunt.hcl")
-}
-
 generate "provider_override" {
   # NOTE: 後からproviderを追加したい時のファイル名
   # https://developer.hashicorp.com/terraform/language/files/override#merging-terraform-blocks
@@ -28,5 +24,8 @@ EOF
 }
 
 dependencies {
-  paths = ["../common"]
+  paths = [
+    "../common",
+    "../gke"
+  ]
 }

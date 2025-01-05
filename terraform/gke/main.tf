@@ -34,7 +34,6 @@ resource "google_container_cluster" "default" {
   }
 }
 
-# Spot VMを使用したノードプール
 resource "google_container_node_pool" "default" {
   name       = "${var.tfvars.prefix}-node-pool"
   location   = var.tfvars.zone
@@ -49,7 +48,7 @@ resource "google_container_node_pool" "default" {
   node_config {
     machine_type = "e2-medium" # コスト効率の良いマシンタイプ
 
-    # Spot VMの設定
+    # NOTE: Spot VMの設定は一旦オフにする
     spot = false
 
     # カスタムサービスアカウントを使用
