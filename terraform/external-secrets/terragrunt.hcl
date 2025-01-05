@@ -5,3 +5,10 @@ include "root" {
 dependency "gke" {
   config_path = find_in_parent_folders("gke/terragrunt.hcl")
 }
+
+dependencies {
+  paths = [
+    "../common",
+    "../gke",
+  ]
+}
