@@ -4,8 +4,4 @@ resource "google_dns_managed_zone" "main" {
   description = "DNS zone for ${var.tfvars.subdomain} environment"
 
   visibility = "public"
-
-  dnssec_config {
-    state = "on"
-  }
 }

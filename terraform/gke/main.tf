@@ -32,6 +32,12 @@ resource "google_container_cluster" "default" {
   gateway_api_config {
     channel = "CHANNEL_STANDARD"
   }
+
+  lifecycle {
+    ignore_changes = [
+      initial_node_count,
+    ]
+  }
 }
 
 resource "google_container_node_pool" "default" {
@@ -62,5 +68,11 @@ resource "google_container_node_pool" "default" {
   management {
     auto_repair  = true
     auto_upgrade = true
+  }
+
+  lifecycle {
+    ignore_changes = [
+      node_count,
+    ]
   }
 }
