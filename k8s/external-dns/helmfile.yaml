@@ -9,3 +9,5 @@ releases:
     version: 1.15.0
     values:
       - values.yaml
+  - name: extra
+    chart: ./extra
