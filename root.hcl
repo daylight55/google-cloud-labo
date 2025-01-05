@@ -1,9 +1,9 @@
-inputs = {
-  tfvars = jsondecode(read_tfvars_file("${get_path_to_repo_root()}/terraform.tfvars"))
-}
-
 locals {
   inputs = jsondecode(read_tfvars_file("${get_path_to_repo_root()}/terraform.tfvars"))
+}
+
+inputs = {
+  tfvars = local.inputs
 }
 
 generate "provider" {
@@ -42,18 +42,4 @@ remote_state {
     path      = "_backend.tf"
     if_exists = "overwrite_terragrunt"
   }
-}
-
-generate "locals" {
-  path      = "_locals.tf"
-  if_exists = "overwrite_terragrunt"
-  contents  = <<EOF
-locals {
-  project        = "${local.inputs.project}"
-  region         = "${local.inputs.region}"
-  zone           = "${local.inputs.zone}"
-  tfstate_bucket = "${local.inputs.tfstate_bucket}"
-  prefix         = "${local.inputs.prefix}"
-}
-EOF
 }

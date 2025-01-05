@@ -22,7 +22,7 @@ resource "google_service_account" "external_secrets" {
 
 # Secret Manager へのアクセス権限付与
 resource "google_project_iam_member" "external_secrets" {
-  project = local.project
+  project = var.tfvars.project
   role    = "roles/secretmanager.secretAccessor"
   member  = "serviceAccount:${google_service_account.external_secrets.email}"
 }
@@ -45,7 +45,7 @@ resource "google_service_account" "external_dns" {
 
 # Cloud DNS管理権限の付与
 resource "google_project_iam_member" "external_dns" {
-  project = local.project
+  project = var.tfvars.project
   role    = "roles/dns.admin"
   member  = "serviceAccount:${google_service_account.external_dns.email}"
 }

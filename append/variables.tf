@@ -5,5 +5,5 @@ variable "cluster_workload_identity_pool" {
 
 variable "tfvars" {
   description = "Root terraform.tfvars file"
-  type        = any
+  type        = map(string)
 }

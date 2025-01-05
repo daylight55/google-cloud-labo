@@ -1,6 +1,6 @@
 resource "google_container_cluster" "default" {
-  name     = "${local.prefix}-cluster"
-  location = local.zone
+  name     = "${var.tfvars.prefix}-cluster"
+  location = var.tfvars.zone
 
   initial_node_count       = 1
   remove_default_node_pool = true
@@ -9,7 +9,7 @@ resource "google_container_cluster" "default" {
   subnetwork = google_compute_subnetwork.private_subnet.name
 
   workload_identity_config {
-    workload_pool = "${local.project}.svc.id.goog"
+    workload_pool = "${var.tfvars.project}.svc.id.goog"
   }
 
   ip_allocation_policy {
@@ -29,13 +29,17 @@ resource "google_container_cluster" "default" {
     channel = "STABLE"
   }
 
+  gateway_api_config {
+    channel = "CHANNEL_STANDARD"
+  }
+
   depends_on = [google_project_service.services]
 }
 
 # Spot VMを使用したノードプール
 resource "google_container_node_pool" "default" {
-  name       = "${local.prefix}-node-pool"
-  location   = local.zone
+  name       = "${var.tfvars.prefix}-node-pool"
+  location   = var.tfvars.zone
   cluster    = google_container_cluster.default.name
   node_count = 1
 
@@ -48,7 +52,7 @@ resource "google_container_node_pool" "default" {
     machine_type = "e2-medium" # コスト効率の良いマシンタイプ
 
     # Spot VMの設定
-    spot = true
+    spot = false
 
     # カスタムサービスアカウントを使用
     service_account = google_service_account.gke_sa.email

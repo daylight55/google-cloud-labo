@@ -1,7 +1,7 @@
 # GKEノード用のサービスアカウント
 resource "google_service_account" "gke_sa" {
-  account_id   = "${local.prefix}-sa"
-  display_name = "${local.prefix} Service Account"
+  account_id   = "${var.tfvars.prefix}-sa"
+  display_name = "${var.tfvars.prefix} Service Account"
   description  = "Service account for GKE nodes"
 }
 
@@ -15,7 +15,7 @@ resource "google_project_iam_member" "gke_sa_roles" {
     "roles/stackdriver.resourceMetadata.writer" # リソースメタデータの書き込み
   ])
 
-  project = local.project
+  project = var.tfvars.project.project
   role    = each.value
   member  = "serviceAccount:${google_service_account.gke_sa.email}"
 }

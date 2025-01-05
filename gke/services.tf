@@ -4,7 +4,7 @@ resource "google_project_service" "services" {
     "containerregistry.googleapis.com",
   ])
 
-  project = local.project
+  project = var.tfvars.project.project
   service = each.key
 
   disable_dependent_services = false # サービスを無効化した時に依存リソースを削除しない
