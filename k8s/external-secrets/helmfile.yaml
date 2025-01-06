@@ -10,7 +10,19 @@ releases:
     values:
       - values.yaml
 
-  # Workload Identity用のIAM Service Account作成
   - name: extra
     namespace: external-secrets
     chart: ./extra
+    needs:
+      - external-secrets
+    hooks:
+      - events: ['presync']
+        showlogs: true
+        command: 'sh'
+        args:
+          - -c
+          - |
+            kubectl wait --for=condition=available --timeout=60s deployment/external-secrets -n external-secrets && \
+            kubectl wait --for=condition=available --timeout=60s deployment/external-secrets-webhook -n external-secrets && \
+            kubectl wait --for=condition=available --timeout=60s deployment/external-secrets-cert-controller -n external-secrets
+          - echo 'External Secrets is ready!'

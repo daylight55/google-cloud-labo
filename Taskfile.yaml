@@ -17,15 +17,15 @@ tasks:
         CLUSTER_NAME=$(terragrunt output -raw cluster_name) && \
         LOCATION=$(terragrunt output -raw cluster_location) && \
         gcloud container clusters get-credentials $CLUSTER_NAME --region $LOCATION
-      - kubectl get cluster-info
+      - kubectl cluster-info
 
   k8s-apply:
     cmds:
-      - helmfile --file ./k8s/helmfile.yaml template | kubectl apply -f -
+      - helmfile --file ./k8s/helmfile.yaml sync
 
   k8s-delete:
     cmds:
-      - helmfile --file ./k8s/helmfile.yaml template | kubectl delete -f -
+      - helmfile --file ./k8s/helmfile.yaml template | kubectl delete -f - --ignore-not-found=true
 
   tf-apply:
     cmds:
