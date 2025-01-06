@@ -19,8 +19,8 @@ helmfiles:
 
   - path: ./sample/helmfile.yaml
     selectors:
-      - name=external-dns
-      - name=external-secrets
+      - name=sample-external-dns
+      - name=sample-external-secrets
 
 environments:
   default:

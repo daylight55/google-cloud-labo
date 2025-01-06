@@ -16,7 +16,7 @@ releases:
     needs:
       - external-secrets
     hooks:
-      - events: ['presync']
+      - events: ['presync', 'preapply']
         showlogs: true
         command: 'sh'
         args:
