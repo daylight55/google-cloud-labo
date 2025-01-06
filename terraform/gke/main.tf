@@ -1,6 +1,6 @@
 resource "google_container_cluster" "default" {
-  name     = "${var.tfvars.prefix}-cluster"
-  location = var.tfvars.zone
+  name     = "${local.env.prefix}-cluster"
+  location = local.env.zone
 
   initial_node_count       = 1
   remove_default_node_pool = true
@@ -9,7 +9,7 @@ resource "google_container_cluster" "default" {
   subnetwork = var.subnetwork_name
 
   workload_identity_config {
-    workload_pool = "${var.tfvars.project}.svc.id.goog"
+    workload_pool = "${local.env.project}.svc.id.goog"
   }
 
   ip_allocation_policy {
@@ -44,8 +44,8 @@ resource "google_container_cluster" "default" {
 }
 
 resource "google_container_node_pool" "default" {
-  name       = "${var.tfvars.prefix}-node-pool"
-  location   = var.tfvars.zone
+  name       = "${local.env.prefix}-node-pool"
+  location   = local.env.zone
   cluster    = google_container_cluster.default.name
   node_count = 2
 

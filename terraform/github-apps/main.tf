@@ -3,11 +3,11 @@
 #
 resource "github_app" "argocd" {
   name        = "ArgoCD"
-  url         = "https://argocd.${var.tfvars.subdomain}.${var.tfvars.domain}"
+  url         = "https://argocd.${local.env.subdomain}.${local.env.domain}"
   description = "ArgoCD GitHub App for GitOps"
 
   webhook_active = true
-  webhook_url    = "https://argocd.${var.tfvars.subdomain}.${var.tfvars.domain}/api/webhook"
+  webhook_url    = "https://argocd.${local.env.subdomain}.${local.env.domain}/api/webhook"
 
   # 必要な権限の設定
   permissions {
@@ -30,15 +30,15 @@ resource "github_app" "argocd" {
 # # GitHub OAuth Appの作成
 # resource "github_oauth_application" "argocd" {
 #   name         = "ArgoCD OAuth"
-#   url          = "https://argocd.${var.tfvars.subdomain}.${var.tfvars.domain}"
-#   callback_url = "https://argocd.${var.tfvars.subdomain}.${var.tfvars.domain}/auth/callback"
+#   url          = "https://argocd.${local.env.subdomain}.${local.env.domain}"
+#   callback_url = "https://argocd.${local.env.subdomain}.${local.env.domain}/auth/callback"
 #   description  = "OAuth application for ArgoCD authentication"
 # }
 
 # # GitHub App installationのための設定
 # resource "github_app_installation" "argocd" {
 #   app_id     = github_app.argocd.app_id
-#   repository = var.tfvars.repository_name
+#   repository = local.env.repository_name
 
 #   repository_ids = [
 #     data.github_repository.repo.repo_id
@@ -47,7 +47,7 @@ resource "github_app" "argocd" {
 
 # # リポジトリ情報の取得
 # data "github_repository" "repo" {
-#   full_name = var.tfvars.repository_name
+#   full_name = local.env.repository_name
 # }
 
 # # GitHub App Private Keyの生成

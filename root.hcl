@@ -1,9 +1,5 @@
 locals {
-  inputs = yamldecode(file("${find_in_parent_folders("env.yaml")}"))
-}
-
-inputs = {
-  tfvars = local.inputs
+  env = yamldecode(file("${find_in_parent_folders("env.yaml")}"))
 }
 
 generate "provider" {
@@ -11,12 +7,12 @@ generate "provider" {
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 provider "google" {
-  project = "${local.inputs.project}"
+  project = "${local.env.project}"
   region  = "us-west1"
 }
 
 provider "google-beta" {
-  project = "${local.inputs.project}"
+  project = "${local.env.project}"
   region  = "us-west1"
 }
 
@@ -34,7 +30,7 @@ EOF
 remote_state {
   backend = "gcs"
   config = {
-    bucket = "${local.inputs.tfstate_bucket}"
+    bucket = "${local.env.tfstate_bucket}"
     prefix = "${path_relative_to_include()}/terraform.tfstate"
   }
 
@@ -42,16 +38,4 @@ remote_state {
     path      = "_backend.tf"
     if_exists = "overwrite_terragrunt"
   }
-}
-
-generate "variables" {
-  path      = "_variables.tf"
-  if_exists = "overwrite_terragrunt"
-  contents  = <<EOF
-variable "tfvars" {
-  type    = map(string)
-  default = {}
-  description = "Root terraform.tfvars file"
-}
-EOF
 }

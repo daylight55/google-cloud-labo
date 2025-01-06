@@ -1,7 +1,7 @@
 locals {
   k8s_external_secret_namespace = "external-secrets"
   k8s_external_secret_sa_name   = "external-secrets"
-  k8s_external_secret_sa_fqn    = "serviceAccount:${var.tfvars.project}.svc.id.goog[${local.k8s_external_secret_namespace}/${local.k8s_external_secret_sa_name}]"
+  k8s_external_secret_sa_fqn    = "serviceAccount:${local.env.project}.svc.id.goog[${local.k8s_external_secret_namespace}/${local.k8s_external_secret_sa_name}]"
 }
 
 #
@@ -15,7 +15,7 @@ resource "google_service_account" "external_secrets" {
 
 # Secret Manager へのアクセス権限付与
 resource "google_project_iam_member" "external_secrets" {
-  project = var.tfvars.project
+  project = local.env.project
   role    = "roles/secretmanager.secretAccessor"
   member  = "serviceAccount:${google_service_account.external_secrets.email}"
 }

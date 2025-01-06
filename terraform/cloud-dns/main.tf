@@ -1,7 +1,7 @@
 resource "google_dns_managed_zone" "main" {
-  name        = "${var.tfvars.subdomain}-zone"
-  dns_name    = "${var.tfvars.subdomain}.${var.tfvars.domain}."
-  description = "DNS zone for ${var.tfvars.subdomain} environment"
+  name        = "${local.env.subdomain}-zone"
+  dns_name    = "${local.env.subdomain}.${local.env.domain}."
+  description = "DNS zone for ${local.env.subdomain} environment"
 
   visibility = "public"
 }

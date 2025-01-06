@@ -2,7 +2,7 @@ locals {
   # External DNS
   k8s_external_dns_namespace = "external-dns"
   k8s_external_dns_sa_name   = "external-dns"
-  k8s_external_dns_sa_fqn    = "serviceAccount:${var.tfvars.project}.svc.id.goog[${local.k8s_external_dns_namespace}/${local.k8s_external_dns_sa_name}]"
+  k8s_external_dns_sa_fqn    = "serviceAccount:${local.env.project}.svc.id.goog[${local.k8s_external_dns_namespace}/${local.k8s_external_dns_sa_name}]"
 
 }
 
@@ -14,7 +14,7 @@ resource "google_service_account" "external_dns" {
 
 # Cloud DNS管理権限の付与
 resource "google_project_iam_member" "external_dns" {
-  project = var.tfvars.project
+  project = local.env.project
   role    = "roles/dns.admin"
   member  = "serviceAccount:${google_service_account.external_dns.email}"
 }

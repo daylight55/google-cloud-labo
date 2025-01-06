@@ -1,13 +1,13 @@
 resource "google_compute_network" "default" {
-  name                    = "${var.tfvars.prefix}-vpc"
+  name                    = "${local.env.prefix}-vpc"
   auto_create_subnetworks = false
 }
 
 resource "google_compute_subnetwork" "private_subnet" {
-  name          = "${var.tfvars.prefix}-subnet"
+  name          = "${local.env.prefix}-subnet"
   ip_cidr_range = "10.0.0.0/24" # NodeのIPアドレス範囲
   network       = google_compute_network.default.id
-  region        = var.tfvars.region
+  region        = local.env.region
 
   secondary_ip_range {
     range_name    = "pod-ranges"
@@ -20,16 +20,16 @@ resource "google_compute_subnetwork" "private_subnet" {
 }
 
 resource "google_compute_router" "private_subnet" {
-  name    = "${var.tfvars.prefix}-router"
-  region  = var.tfvars.region
+  name    = "${local.env.prefix}-router"
+  region  = local.env.region
   network = google_compute_network.default.id
 }
 
 # Cloud NAT
 resource "google_compute_router_nat" "nat" {
-  name                               = "${var.tfvars.prefix}-nat"
+  name                               = "${local.env.prefix}-nat"
   router                             = google_compute_router.private_subnet.name
-  region                             = var.tfvars.region
+  region                             = local.env.region
   nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
 
