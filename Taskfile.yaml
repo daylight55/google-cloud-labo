@@ -29,11 +29,11 @@ tasks:
 
   tf-apply:
     cmds:
-      - terragrunt run-all apply
+      - terragrunt run-all apply -auto-approve
 
   tf-destroy:
     cmds:
-      - terragrunt run-all destroy
+      - terragrunt run-all destroy -auto-approve
 
   apply:
     cmds:
