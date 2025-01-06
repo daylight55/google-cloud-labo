@@ -17,6 +17,7 @@ tasks:
         CLUSTER_NAME=$(terragrunt output -raw cluster_name) && \
         LOCATION=$(terragrunt output -raw cluster_location) && \
         gcloud container clusters get-credentials $CLUSTER_NAME --region $LOCATION
+      - kubectl get cluster-info
 
   k8s-apply:
     cmds:
@@ -39,8 +40,6 @@ tasks:
       - task: tf-apply
       - task: get-gke-credentials
       - task: k8s-apply
-    status:
-      - kubectl cluster-info &>/dev/null
 
   destroy:
     cmds:
