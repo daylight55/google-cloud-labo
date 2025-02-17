@@ -1,3 +1,4 @@
 releases:
   - name: common
     chart: ./manifest
+    namespace: ''
